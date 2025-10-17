@@ -1,9 +1,16 @@
 import React from "react";
 import "./index.css";
-import HomePage from "./components/HomePage";
+
+import HomePage from "./components/homepage";
+import DashBoard from "./components/Dashboard";
 
 function App() {
-  return <HomePage />;
+  return (
+    <>
+      <HomePage />
+      <DashBoard />
+    </>
+  );
 }
 
 export default App;
