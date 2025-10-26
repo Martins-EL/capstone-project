@@ -12,6 +12,17 @@ export const useBudget = () => {
 };
 
 export const BudgetProvider = ({ children }) => {
+  // Default categories
+  const defaultCategories = [
+    "Food Stuff",
+    "Transport",
+    "Church Commitment",
+    "Miscellaneous",
+    "Hair Cut",
+    "Elder Gifts",
+    "Savings",
+  ];
+
   // Initialize state from localStorage
   const [income, setIncome] = useState(() => {
     const saved = localStorage.getItem("budget_income");
@@ -28,6 +39,11 @@ export const BudgetProvider = ({ children }) => {
     return saved ? JSON.parse(saved) : [];
   });
 
+  const [customCategories, setCustomCategories] = useState(() => {
+    const saved = localStorage.getItem("budget_custom_categories");
+    return saved ? JSON.parse(saved) : [];
+  });
+
   // Save to localStorage whenever state changes
   useEffect(() => {
     localStorage.setItem("budget_income", JSON.stringify(income));
@@ -40,6 +56,13 @@ export const BudgetProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem("budget_items", JSON.stringify(budgetItems));
   }, [budgetItems]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "budget_custom_categories",
+      JSON.stringify(customCategories)
+    );
+  }, [customCategories]);
 
   // Calculate totals
   const totalIncome = income.reduce(
@@ -107,6 +130,37 @@ export const BudgetProvider = ({ children }) => {
     setBudgetItems([]);
   };
 
+  // Add custom category
+  const addCustomCategory = (categoryName) => {
+    const trimmedName = categoryName.trim();
+    const allCategories = [...defaultCategories, ...customCategories];
+
+    if (!trimmedName) {
+      throw new Error("Category name cannot be empty");
+    }
+
+    if (
+      allCategories.some(
+        (cat) => cat.toLowerCase() === trimmedName.toLowerCase()
+      )
+    ) {
+      throw new Error("Category already exists");
+    }
+
+    setCustomCategories([...customCategories, trimmedName]);
+    return true;
+  };
+
+  // Delete custom category
+  const deleteCustomCategory = (categoryName) => {
+    setCustomCategories(customCategories.filter((cat) => cat !== categoryName));
+  };
+
+  // Get all categories (default + custom)
+  const getAllCategories = () => {
+    return [...defaultCategories, ...customCategories];
+  };
+
   // Get expenses by category for chart - now includes budget items
   const getExpensesByCategory = () => {
     const categoryTotals = {};
@@ -135,6 +189,7 @@ export const BudgetProvider = ({ children }) => {
     income,
     expenses,
     budgetItems,
+    customCategories,
     totalIncome,
     totalExpenses,
     balance,
@@ -146,6 +201,9 @@ export const BudgetProvider = ({ children }) => {
     deleteBudgetItem,
     deleteAllExpenses,
     deleteAllBudgetItems,
+    addCustomCategory,
+    deleteCustomCategory,
+    getAllCategories,
     getExpensesByCategory,
   };
 

@@ -4,7 +4,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { useBudget } from "@/context/BudgetContext";
 import { useAuth } from "@/context/AuthContext";
-import { AddIncomeModal, AddBudgetModal } from "./Modals";
+import { AddIncomeModal, AddBudgetModal, AddCategoryModal } from "./Modals";
 import { toast } from "sonner";
 
 function DashBoard({ onNavigate }) {
@@ -31,18 +31,12 @@ function DashBoard({ onNavigate }) {
     deleteAllExpenses,
     deleteAllBudgetItems,
     getExpensesByCategory,
+    getAllCategories,
   } = useBudget();
 
   const chartData = getExpensesByCategory();
 
-  const categories = [
-    "Food Stuff",
-    "Transport",
-    "Church Commitment",
-    "Miscellaneous",
-    "Hair Cut",
-    "Elder Gifts",
-  ];
+  const categories = getAllCategories();
 
   const COLORS = [
     "hsl(271, 91%, 65%)",
@@ -80,7 +74,27 @@ function DashBoard({ onNavigate }) {
     return date.toLocaleDateString("en-GB");
   };
 
+  const formatDateForDisplay = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${day}/${month}/${year}`;
+  };
+
+  const getDateString = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
   const recentExpenses = [...expenses].reverse().slice(0, 5);
+
+  // Calculate total budget
+  const totalBudget = budgetItems.reduce(
+    (sum, item) => sum + parseFloat(item.amount || 0),
+    0
+  );
 
   const handleLogout = () => {
     logout();
@@ -107,7 +121,7 @@ function DashBoard({ onNavigate }) {
             </button>
             <button
               onClick={handleLogout}
-              className="border border-blue-500 bg-white text-blue-500 px-4 py-2 rounded-xl hover:bg-blue-500 hover:text-white transition-colors duration-200 text-sm md:text-base font-medium"
+              className="border border-black bg-white text-black px-4 py-2 rounded-xl hover:bg-blue-500 hover:text-white transition-colors duration-200 text-sm md:text-base font-medium"
             >
               Logout
             </button>
@@ -235,9 +249,19 @@ function DashBoard({ onNavigate }) {
                   </div>
 
                   <div>
-                    <label className="block mb-2 font-medium text-sm md:text-base">
-                      Category
-                    </label>
+                    <div className="flex justify-between items-center mb-2">
+                      <label className="block font-medium text-sm md:text-base">
+                        Category
+                      </label>
+                      <AddCategoryModal>
+                        <button
+                          type="button"
+                          className="text-xs text-blue-600 hover:text-blue-800 font-semibold"
+                        >
+                          + Add New
+                        </button>
+                      </AddCategoryModal>
+                    </div>
                     <select
                       value={expenseForm.category}
                       onChange={(e) =>
@@ -373,6 +397,14 @@ function DashBoard({ onNavigate }) {
                         </div>
                       </div>
                     ))}
+                    <div className="mt-4 pt-4 border-t-2 border-gray-300">
+                      <div className="flex justify-between items-center bg-blue-50 p-3 rounded-lg">
+                        <span className="font-bold text-lg">Total Budget:</span>
+                        <span className="font-bold text-xl text-blue-700">
+                          {formatCurrency(totalBudget)}
+                        </span>
+                      </div>
+                    </div>
                     <button
                       onClick={() => {
                         deleteAllBudgetItems();
@@ -461,11 +493,10 @@ function DashBoard({ onNavigate }) {
                 {selectedDate && (
                   <div className="mt-4 pt-4 border-t">
                     <h3 className="font-semibold text-sm mb-2">
-                      Transactions on{" "}
-                      {formatDate(selectedDate.toISOString().split("T")[0])}
+                      Transactions on {formatDateForDisplay(selectedDate)}
                     </h3>
                     {(() => {
-                      const dateStr = selectedDate.toISOString().split("T")[0];
+                      const dateStr = getDateString(selectedDate);
                       const dayExpenses = expenses.filter(
                         (e) => e.date === dateStr
                       );

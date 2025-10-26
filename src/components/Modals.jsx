@@ -130,17 +130,9 @@ export function AddBudgetModal({ children }) {
   const [category, setCategory] = useState("Food Stuff");
   const [date, setDate] = useState(new Date());
   const [showCalendar, setShowCalendar] = useState(false);
-  const { addBudgetItem } = useBudget();
+  const { addBudgetItem, getAllCategories } = useBudget();
 
-  const categories = [
-    "Food Stuff",
-    "Transport",
-    "Church Commitment",
-    "Miscellaneous",
-    "Hair Cut",
-    "Elder Gifts",
-    "Savings",
-  ];
+  const categories = getAllCategories();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -171,7 +163,17 @@ export function AddBudgetModal({ children }) {
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block mb-2 font-medium text-sm">Category</label>
+            <div className="flex justify-between items-center mb-2">
+              <label className="block font-medium text-sm">Category</label>
+              <AddCategoryModal>
+                <button
+                  type="button"
+                  className="text-xs text-blue-600 hover:text-blue-800 font-semibold"
+                >
+                  + Add New
+                </button>
+              </AddCategoryModal>
+            </div>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
@@ -229,6 +231,69 @@ export function AddBudgetModal({ children }) {
             className="w-full bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition-colors"
           >
             Add Budget Item
+          </button>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+export function AddCategoryModal({ children, onCategoryAdded }) {
+  const [open, setOpen] = useState(false);
+  const [categoryName, setCategoryName] = useState("");
+  const { addCustomCategory } = useBudget();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (categoryName.trim()) {
+      try {
+        addCustomCategory(categoryName);
+        toast.success(`Category "${categoryName}" added successfully!`);
+        setCategoryName("");
+        setOpen(false);
+        if (onCategoryAdded) {
+          onCategoryAdded(categoryName);
+        }
+      } catch (error) {
+        toast.error(error.message);
+      }
+    }
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Add New Category</DialogTitle>
+          <DialogDescription>
+            Create a custom category for your budget tracking.
+          </DialogDescription>
+        </DialogHeader>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block mb-2 font-medium text-sm">
+              Category Name
+            </label>
+            <input
+              type="text"
+              placeholder="e.g., Entertainment, Utilities"
+              value={categoryName}
+              onChange={(e) => setCategoryName(e.target.value)}
+              className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+              maxLength={30}
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              {categoryName.length}/30 characters
+            </p>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition-colors"
+          >
+            Add Category
           </button>
         </form>
       </DialogContent>
