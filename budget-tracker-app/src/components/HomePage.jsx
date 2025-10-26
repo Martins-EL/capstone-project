@@ -2,57 +2,72 @@ import React from "react";
 import logo from "../assets/logo.png";
 import HomeImage from "../assets/HomeImage.png";
 
-function HomePage() {
+function HomePage({ onNavigate }) {
   return (
-    <div className="bg-black h-screen flex flex-col items-center sm:bg-black sm:h-screen sm:flex sm:flex-col sm:items-center 2xl:bg-black 2xl:h-screen 2xl:w-screen">
-      <navbar className="h-20 flex flex-row gap-8 justify-around items-center mt-4 sm:flex sm:flex-row sm:justify-around sm:gap-100 sm:mt-4 md:flex  md:justify-around lg:flex lg:justify-around lg:gap-150  2xl:flex 2xl:justify-around 2xl:gap-300 ">
-        <div className="w-[200px]  sm:w-[200px] 2xl:w-[300px]">
-          <img src={logo} alt="App logo" />
-        </div>
-
-        <div>
-          <button className="border-1 hover:bg-blue-600 border-white text-white px-3 py-1 rounded-xl sm:border-1 sm:border-white sm:text-white sm:px-3 sm:py-1 sm:rounded-xl 2xl:hover:bg-blue-600 sm:hover:bg-blue-600 2xl:font-bold">
+    <div className="bg-[#2C2C2C] min-h-screen w-full overflow-x-hidden">
+      <nav className="w-full px-4 py-4 md:px-8 lg:px-16">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          <div className="w-32 sm:w-40 md:w-48">
+            <img src={logo} alt="App logo" className="w-full h-auto" />
+          </div>
+          <button
+            onClick={() => onNavigate("dashboard")}
+            className="border border-white text-white px-4 py-2 rounded-xl hover:bg-blue-600 transition-colors duration-200 text-sm md:text-base font-medium"
+          >
             Dashboard
           </button>
         </div>
-      </navbar>
-      <section>
-        <div className="flex  flex-col mt-20 items-center sm:flex sm:items-center sm:flex-col  md:mt-50 2xl:flex 2xl:flex-row 2xl:text-left 2xl:mt-10  lg:mt-50 2xl:bg-black 2xl:ml-65 2xl:gap-33 ">
-          <div className=" flex flex-col items-center 2xl:flex 2xl:flex-col 2xl:h-[500px] lg:items-center lg:flex lg:flex-col ">
-            <h1 className="text-white font-extrabold text-center text-0.2 mb-2 mt-1 w-90 sm:text-white sm:font-extrabold sm:text-center sm:text-3xl sm:mb-5 sm:mt-1.5 sm:w-200 sm:h-30 2xl:text-8xl 2xl:mb-60 lg:text-4xl lg:w-245 2xl:text-left 2xl:text-white">
-              Hello!
-              <br />
-              Let's make managing your finances simple and effective.
-            </h1>
-            <p className="text-white text-0.2 w-90  text-center mb-2 sm:text-white sm:w-200 sm:h-10 sm:text-sm  sm:text-center  lg:text-center 2xl:text-left 2xl:text-l 2xl:mt-40 2xl:mr-40">
-              Achieve your objectives through tailored insights, adaptable
-              budgets, and expenditure monitoring.
-            </p>
-          </div>
-          <img
-            src={HomeImage}
-            alt="Image of a man holding calculator"
-            className="w-[360px] h-[230px] mt-2 flex items-center sm:w-175 sm:h-100 sm:flex sm:items-center 2xl:w-[500px] 2xl:h-[600px] lg:w-[900px] lg:h-[500px] 2xl:mr-160"
-          />
-        </div>
+      </nav>
 
-        <div className=" h-[150px] flex flex-col items-center md:flex md:flex-row md:justify-around md:items-baseline  2xl:flex 2xl:flex-row 2xl:items-baseline 2xl:bg-black 2xl:w-240 2xl:ml-30">
-          <button className="border-1 w-[200px] h-[30px]  bg-blue-700 border-white text-sm text-white px-15 py-1  mt-10 rounded-xl md:border-1 md:border-white md:text-white md:px-10 md:py-1 md:mt-10 md:rounded-xl 2xl  ">
-            log in
-          </button>
-          <div>
-            <button className="border-1 w-[200px] h-[30px] bg-blue-700 border-white text-sm text-white px-15 py-1 mt-10 rounded-xl md:border-1 md:border-white md:text-white md:px-10 md:py-1 md:mt-10 md:rounded-xl">
-              sign up
+      <section className="w-full px-4 md:px-8 lg:px-16 py-8 md:py-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 mb-12">
+            <div className="flex-1 text-center lg:text-left">
+              <h1 className="text-blue-600 font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-4 md:mb-6 leading-tight">
+                Hello!
+                <br />
+                Let's make managing your finances simple and effective.
+              </h1>
+              <p className="text-white text-base sm:text-lg md:text-xl max-w-2xl mx-auto lg:mx-0">
+                Achieve your objectives through tailored insights, adaptable
+                budgets, and expenditure monitoring.
+              </p>
+            </div>
+
+            <div className="flex-1 w-full max-w-md lg:max-w-lg">
+              <img
+                src={HomeImage}
+                alt="Image of a man holding calculator"
+                className="w-full h-auto rounded-2xl shadow-xl"
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-6 items-center justify-center lg:justify-start max-w-xl mx-auto lg:mx-0">
+            <button
+              onClick={() => onNavigate("login")}
+              className="w-full sm:w-auto bg-blue-700 hover:bg-blue-600 border border-white text-white px-8 py-3 rounded-xl transition-colors duration-200 font-medium text-sm md:text-base"
+            >
+              Log In
             </button>
-            <p className=" text-white ml-2 ">
-              Don’t have an account yet?
-              <br />
-              click on the button above.
-            </p>
+            <div className="text-center sm:text-left">
+              <button
+                onClick={() => onNavigate("signup")}
+                className="w-full sm:w-auto bg-blue-700 hover:bg-blue-600 border border-white text-white px-8 py-3 rounded-xl transition-colors duration-200 font-medium text-sm md:text-base mb-2"
+              >
+                Sign Up
+              </button>
+              <p className="text-white text-xs md:text-sm">
+                Don't have an account yet?
+                <br />
+                click on the button above.
+              </p>
+            </div>
           </div>
         </div>
       </section>
     </div>
   );
 }
+
 export default HomePage;
