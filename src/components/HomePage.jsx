@@ -19,7 +19,7 @@ function HomePage({ onNavigate }) {
         </div>
       </nav>
 
-      <section className="w-full px-4 md:px-8 lg:px-16 py-8 md:py-12 md:mt-10 sm:mt-60 ">
+      <section className="w-full px-4 md:px-8 lg:px-16 py-8 md:py-12 md:mt-10 sm:mt-20 ">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 mb-12">
             <div className="flex-1 text-center lg:text-left">
