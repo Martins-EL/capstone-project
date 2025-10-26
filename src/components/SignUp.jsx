@@ -50,21 +50,14 @@ function SignUp({ onNavigate }) {
 
   return (
     <div className="bg-gray-50 min-h-screen w-full overflow-x-hidden flex items-center justify-center px-4 py-8">
-      <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
+      <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 sm:flex sm:justify-around sm:gap-0 md:gap-16 items-center">
         {/* Left side - Brand */}
         <div className="text-center md:text-left">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8">
             Sign up to
           </h1>
-          <div className="flex items-center justify-center md:justify-start gap-3">
-            <img
-              src={logo}
-              alt="BudgMart Logo"
-              className="w-16 h-16 md:w-20 md:h-20"
-            />
-            <span className="text-3xl md:text-4xl lg:text-5xl font-bold text-green-600">
-              BUDGmart.
-            </span>
+          <div className="ml-40 sm:ml-0 w-32 sm:w-40 md:w-80">
+            <img src={logo} alt="App logo" className="w-full h-auto" />
           </div>
         </div>
 

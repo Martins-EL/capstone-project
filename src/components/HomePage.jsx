@@ -19,11 +19,11 @@ function HomePage({ onNavigate }) {
         </div>
       </nav>
 
-      <section className="w-full px-4 md:px-8 lg:px-16 py-8 md:py-12">
+      <section className="w-full px-4 md:px-8 lg:px-16 py-8 md:py-12 md:mt-20">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 mb-12">
             <div className="flex-1 text-center lg:text-left">
-              <h1 className="text-blue-600 font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-4 md:mb-6 leading-tight">
+              <h1 className="text-white sm:text-white md:text-white font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-4 md:mb-6 leading-tight">
                 Hello!
                 <br />
                 Let's make managing your finances simple and effective.
@@ -46,14 +46,14 @@ function HomePage({ onNavigate }) {
           <div className="flex flex-col sm:flex-row gap-6 items-center justify-center lg:justify-start max-w-xl mx-auto lg:mx-0">
             <button
               onClick={() => onNavigate("login")}
-              className="w-full sm:w-auto bg-blue-700 hover:bg-blue-600 border border-white text-white px-8 py-3 rounded-xl transition-colors duration-200 font-medium text-sm md:text-base"
+              className="w-full sm:w-auto bg-blue-700 hover:bg-blue-600 border border-white text-white px-8 py-3 md:px-8 md:py-1  rounded-xl transition-colors duration-200 font-medium text-sm md:text-base"
             >
               Log In
             </button>
-            <div className="text-center sm:text-left">
+            <div className="text-center sm:text-left ">
               <button
                 onClick={() => onNavigate("signup")}
-                className="w-full sm:w-auto bg-blue-700 hover:bg-blue-600 border border-white text-white px-8 py-3 rounded-xl transition-colors duration-200 font-medium text-sm md:text-base mb-2"
+                className="w-full sm:w-auto bg-blue-700 hover:bg-blue-600 border border-white text-white px-8 py-3 md:px-8 md:py-1 md:mt-12 rounded-xl transition-colors duration-200 font-medium text-sm md:text-base mb-2"
               >
                 Sign Up
               </button>

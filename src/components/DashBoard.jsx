@@ -107,7 +107,7 @@ function DashBoard({ onNavigate }) {
             </button>
             <button
               onClick={handleLogout}
-              className="border border-red-500 bg-white text-red-500 px-4 py-2 rounded-xl hover:bg-red-500 hover:text-white transition-colors duration-200 text-sm md:text-base font-medium"
+              className="border border-blue-500 bg-white text-blue-500 px-4 py-2 rounded-xl hover:bg-blue-500 hover:text-white transition-colors duration-200 text-sm md:text-base font-medium"
             >
               Logout
             </button>
